@@ -1,0 +1,47 @@
+### Variables
+@baseUrl = http://localhost:3000/api/auth
+
+### 1. Iniciar Sesión (Login) - Primer Ingreso
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "nationalId": "123456",
+  "password": "Admin123!"
+}
+
+### Copiar el TOKEN de la respuesta anterior para los siguientes pasos
+@token = <pega_tu_token_aqui>
+
+### 2. Cambio Obligatorio de Contraseña (Primer Login)
+POST {{baseUrl}}/change-password-first
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "newPassword": "SecretPass2024!",
+  "confirmPassword": "SecretPass2024!"
+}
+
+### 3. Obtener Mis Datos (Me)
+GET {{baseUrl}}/me
+Authorization: Bearer {{token}}
+
+### 4. Solicitar Recuperación (Olvidé mi contraseña)
+POST {{baseUrl}}/forgot-password
+Content-Type: application/json
+
+{
+  "email": "admin@repfora.com"
+}
+
+### 5. Cambio Voluntario (Desde Perfil)
+POST {{baseUrl}}/change-password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "SecretPass2024!",
+  "newPassword": "NewSuperSecret123!",
+  "confirmPassword": "NewSuperSecret123!"
+}
