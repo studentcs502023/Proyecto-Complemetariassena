@@ -50,6 +50,13 @@ const DOCUMENT_STATUSES = [
   'REJECTED'        // admin rejected with comments
 ];
 
+const DOCUMENT_TYPES = [
+  'EP_CERTIFICATE', 
+  'PERFORMANCE_EVALUATION', 
+  'COMMITMENT_LETTER', 
+  'OTHER'
+];
+
 const NOVELTY_TYPES = [
   'DESERTION',
   'DISCIPLINARY_ISSUE',

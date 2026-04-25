@@ -5,6 +5,8 @@ import { env } from './src/config/env.js';
 import { conectarMongo } from './src/config/db.js'; 
 import { seedSystemConfigs } from './src/config/systemConfig.seed.js';
 import authRoutes from './src/routes/auth.routes.js';
+import usersRoutes from './src/routes/users.routes.js';
+import epRoutes from './src/routes/productiveStages.routes.js';
 import systemConfigRoutes from './src/routes/systemConfig.routes.js';
 import companyRoutes from './src/routes/companies.routes.js';
 import noveltyRoutes from './src/routes/novelties.routes.js';
@@ -27,6 +29,8 @@ app.use(express.json());
 
 // Rutas base
 app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/productive-stages', epRoutes);
 app.use('/api/system-config', systemConfigRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/novelties', noveltyRoutes);

@@ -1,7 +1,7 @@
 import Document from '../models/Document.model.js';
 import ProductiveStage from '../models/ProductiveStage.model.js';
 import { recordAuditLog } from '../utils/auditLog.util.js';
-import { getConfig } from './systemConfig.service.js';
+import { getConfig } from '../utils/configHelper.util.js';
 
 // MOCK: Google Drive integration
 const mockDriveUpload = async (file, folderPath) => {
