@@ -6,6 +6,9 @@ import { conectarMongo } from './src/config/db.js';
 import { seedSystemConfigs } from './src/config/systemConfig.seed.js';
 import authRoutes from './src/routes/auth.routes.js';
 import systemConfigRoutes from './src/routes/systemConfig.routes.js';
+import companyRoutes from './src/routes/companies.routes.js';
+import noveltyRoutes from './src/routes/novelties.routes.js';
+import documentRoutes from './src/routes/documents.routes.js';
 
 const app = express();
 
@@ -25,6 +28,9 @@ app.use(express.json());
 // Rutas base
 app.use('/api/auth', authRoutes);
 app.use('/api/system-config', systemConfigRoutes);
+app.use('/api/companies', companyRoutes);
+app.use('/api/novelties', noveltyRoutes);
+app.use('/api/documents', documentRoutes);
 
 // Puerto y Listen (Solo si no estamos en test)
 if (process.env.NODE_ENV !== 'test') {

@@ -19,6 +19,7 @@ src/services/users.service.js
 src/routes/users.routes.js
 src/utils/importParser.util.js     // CSV/XLSX parser for bulk import
 ```
+this field it is finished
 
 > `User.model.js` already created in Auth module.
 
