@@ -1,0 +1,156 @@
+const ROLES = ['ADMIN', 'INSTRUCTOR', 'APPRENTICE'];
+
+const INSTRUCTOR_STATUSES = ['ACTIVE', 'INACTIVE', 'CONTRACT_ENDED'];
+
+const INSTRUCTOR_TYPES = ['FOLLOWUP', 'TECHNICAL', 'PROJECT'];
+
+const TRAINING_LEVELS = ['TECHNICIAN', 'TECHNOLOGIST'];
+
+const EP_MODALITIES = [
+  'APPRENTICESHIP_CONTRACT',
+  'LABOR_LINK',
+  'INTERNSHIP',
+  'INDIVIDUAL_PRODUCTIVE_PROJECT',
+  'GROUP_PRODUCTIVE_PROJECT'
+];
+
+const EP_STATUSES = [
+  'PENDING_REGISTRATION',  // apprentice enabled but has not registered EP yet
+  'PENDING_APPROVAL',      // apprentice registered, waiting for admin approval
+  'ACTIVE',                // admin approved, instructors assigned
+  'IN_FOLLOWUP',           // at least 1 tracking completed
+  'CERTIFICATION',         // certification documents in progress
+  'COMPLETED',             // admin marked as completed
+  'ARCHIVED'               // historical process archived
+];
+
+const BITACORA_STATUSES = [
+  'PENDING',       // submitted by apprentice, awaiting review
+  'IN_REVIEW',     // instructor opened it
+  'APPROVED',      // instructor approved
+  'REJECTED'       // instructor rejected with comments
+];
+
+const TRACKING_STATUSES = [
+  'SCHEDULED',   // date set but not yet done
+  'EXECUTED',    // tracking done, pending payment
+  'PAID'         // hours discounted / paid
+];
+
+const TRACKING_TYPES = [
+  'IN_PERSON',
+  'VIRTUAL',
+  'EXTRAORDINARY'
+];
+
+const DOCUMENT_STATUSES = [
+  'SUBMITTED',      // apprentice uploaded, awaiting review
+  'IN_VALIDATION',  // admin reviewing
+  'APPROVED',       // admin approved
+  'REJECTED'        // admin rejected with comments
+];
+
+const DOCUMENT_TYPES = [
+  'EP_CERTIFICATE', 
+  'PERFORMANCE_EVALUATION', 
+  'COMMITMENT_LETTER', 
+  'OTHER'
+];
+
+const NOVELTY_TYPES = [
+  'DESERTION',
+  'DISCIPLINARY_ISSUE',
+  'COMPANY_CONDITIONS_CHANGE',
+  'OTHER'
+];
+
+const NOVELTY_STATUSES = [
+  'PENDING',
+  'IN_PROGRESS',
+  'RESOLVED'
+];
+
+const NOTIFICATION_TYPES = [
+  // Apprentice
+  'SYSTEM_WELCOME',
+  'EP_REGISTRATION_REMINDER',
+  'ENROLLMENT_EXPIRY_ALERT',
+  'EP_APPROVED',
+  'EP_REJECTED',
+  'BITACORA_APPROVED',
+  'BITACORA_REJECTED',
+  'BITACORA_REMINDER',
+  'TRACKING_REMINDER',
+  'DOCUMENTS_APPROVED',
+  'DOCUMENTS_REJECTED',
+  'DOCUMENTS_REMINDER',
+  // Instructor
+  'APPRENTICE_ASSIGNED',
+  'APPRENTICE_REASSIGNED',
+  'BITACORA_PENDING_REVIEW',
+  'EXTRAORDINARY_TRACKING_APPROVED',
+  'HOURS_LIMIT_ALERT',
+  'HOURS_OVERLOAD',
+  'TRACKING_DEADLINE_APPROACHING',
+  'ADMIN_COMMENT_ON_BITACORA',
+  // Admin
+  'NEW_CRITICAL_NOVELTY',
+  'INSTRUCTOR_OVERDUE_REVIEW',
+  'APPRENTICE_MISSING_BITACORA',
+];
+
+const AUDIT_ACTIONS = [
+  'LOGIN',
+  'PASSWORD_CHANGED_FIRST_LOGIN',
+  'PASSWORD_RESET',
+  'PASSWORD_CHANGED',
+  'INSTRUCTOR_CREATED',
+  'INSTRUCTOR_UPDATED',
+  'INSTRUCTOR_STATUS_CHANGED',
+  'INSTRUCTOR_REASSIGNMENT',
+  'APPRENTICE_CREATED',
+  'APPRENTICE_UPDATED',
+  'APPRENTICE_IMPORTED',
+  'COMPANY_CREATED',
+  'COMPANY_UPDATED',
+  'EP_REGISTERED',
+  'EP_APPROVED',
+  'EP_REJECTED',
+  'EP_INSTRUCTOR_ASSIGNED',
+  'EP_COMPLETED',
+  'EP_ARCHIVED',
+  'BITACORA_SUBMITTED',
+  'BITACORA_APPROVED',
+  'BITACORA_REJECTED',
+  'TRACKING_CREATED',
+  'TRACKING_STATUS_UPDATED',
+  'TRACKING_EXTRAORDINARY_REQUESTED',
+  'TRACKING_EXTRAORDINARY_APPROVED',
+  'HOURS_MARKED_PAID',
+  'HOURS_CARRIED_OVER',
+  'DOCUMENT_SUBMITTED',
+  'DOCUMENT_APPROVED',
+  'DOCUMENT_REJECTED',
+  'DOCUMENT_DELETED',
+  'NOVELTY_CREATED',
+  'NOVELTY_RESOLVED',
+  'SYSTEM_CONFIG_UPDATED',
+];
+
+export {
+  ROLES,
+  INSTRUCTOR_STATUSES,
+  INSTRUCTOR_TYPES,
+  TRAINING_LEVELS,
+  EP_MODALITIES,
+  EP_STATUSES,
+  BITACORA_STATUSES,
+  TRACKING_STATUSES,
+  TRACKING_TYPES,
+  DOCUMENT_STATUSES,
+  DOCUMENT_TYPES,
+  NOVELTY_TYPES,
+  NOVELTY_STATUSES,
+  NOTIFICATION_TYPES,
+  AUDIT_ACTIONS
+};
