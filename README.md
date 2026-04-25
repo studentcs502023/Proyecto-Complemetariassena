@@ -64,3 +64,31 @@ Completed Tasks:
    - PDF Archiving: Automatic generation and overwriting of summary PDFs on Drive.
    - Audit Logs: Full traceability for creation and resolution of novelties.
 
+   - 
+✦ Notifications module verified and Spec 11 complete.
+
+  The Notifications module (Spec 11) is now fully implemented and verified.
+
+  Completed Tasks:
+   - Models: Created Notification.model.js.
+   - Services: 
+     - Implemented email.service.js using nodemailer.
+     - Implemented notification.service.js as the central entry point for in-platform and
+       email alerts.
+   - Controller & Routes: Established notifications.controller.js and
+     notifications.routes.js.
+   - Scheduled Jobs: Created src/jobs/alerts.job.js for overdue reviews and missing
+     bitacoras, registered to run daily.
+   - Verification: Successfully ran the tests/notifications.test.js suite (7/7 tests
+     passed).
+
+  Key Features:
+   - Dual Delivery: Every notification creates a database record and attempts to send an
+     email (without blocking on email failure).
+   - Centralized Service: notificationService.send() simplifies sending alerts to multiple
+     recipients.
+   - Badge Support: Lightweight /unread-count endpoint for the frontend UI.
+   - Automation: Proactive cron jobs identify stale processes (pending reviews or missing
+     submissions).
+
+
