@@ -1,3 +1,4 @@
+// GET / 404 3.705 ms - 139
 import CompanyService from '../services/companies.service.js';
 import { successResponse, errorResponse } from '../utils/response.util.js';
 

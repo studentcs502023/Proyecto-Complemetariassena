@@ -34,9 +34,7 @@ const systemConfigSchema = new mongoose.Schema(
     }
 );
 
-// Índice para búsquedas rápidas por clave
-systemConfigSchema.index({ key: 1 });
-
+// No es necesario crear el índice manualmente ya que 'key' tiene 'unique: true'
 const SystemConfig = mongoose.model("SystemConfig", systemConfigSchema);
 
 export default SystemConfig;

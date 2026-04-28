@@ -180,7 +180,7 @@ class UserService {
         const instructor = await User.findOneAndUpdate(
             { _id: id, role: "INSTRUCTOR", isActive: true },
             { $set: updates },
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         ).select("-password");
 
         if (!instructor) {
@@ -457,7 +457,7 @@ class UserService {
         const apprentice = await User.findOneAndUpdate(
             { _id: id, role: "APPRENTICE", isActive: true },
             { $set: updates },
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         ).select("-password");
 
         if (!apprentice) {

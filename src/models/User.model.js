@@ -128,8 +128,6 @@ const userSchema = new mongoose.Schema(
 );
 
 // Aplicar índices para búsquedas optimizadas
-userSchema.index({ nationalId: 1 });
-userSchema.index({ email: 1 });
 userSchema.index({ role: 1, status: 1 });
 userSchema.index({ role: 1, isActive: 1 });
 userSchema.index({ enrollmentNumber: 1 });

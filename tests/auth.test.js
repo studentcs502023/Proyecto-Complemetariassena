@@ -9,9 +9,10 @@ describe("Módulo de Autenticación", () => {
     let token;
 
     beforeAll(async () => {
+        const MONGO_URI = env.MONGODB_URI || 'mongodb://127.0.0.1:27017/repfora_test';
         // Conectar a la base de datos para pruebas
         if (mongoose.connection.readyState === 0) {
-            await mongoose.connect(env.MONGODB_URI);
+            await mongoose.connect(MONGO_URI);
         }
         
         // Limpiar usuarios de prueba previos

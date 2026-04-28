@@ -1,5 +1,6 @@
 import Document from '../models/Document.model.js';
 import ProductiveStage from '../models/ProductiveStage.model.js';
+import hourService from './hours.service.js';
 import { recordAuditLog } from '../utils/auditLog.util.js';
 import { getConfig } from '../utils/configHelper.util.js';
 
@@ -16,11 +17,6 @@ const mockSendNotification = async (type, payload) => {
   console.log(`[MOCK NOTIFICATION] ${type}:`, payload);
 };
 
-// MOCK: Hours integration
-const mockAddHours = async (data) => {
-  console.log(`[MOCK HOURS] addHours:`, data);
-};
-
 export const createDocument = async (reqUser, productiveStageId, documentType, file) => {
   if (!productiveStageId || !documentType || !file) {
       throw new Error('400|Missing required fields: productiveStageId, documentType, file');
@@ -29,7 +25,7 @@ export const createDocument = async (reqUser, productiveStageId, documentType, f
   const ep = await ProductiveStage.findById(productiveStageId).populate('apprentice');
   if (!ep) throw new Error('404|ProductiveStage not found');
 
-  if (ep.apprentice._id.toString() !== reqUser.id) {
+  if (ep.apprentice._id.toString() !== reqUser.id.toString()) {
     throw new Error('403|Forbidden: You can only submit documents for your own ProductiveStage');
   }
 
@@ -94,9 +90,13 @@ export const getDocuments = async (reqUser, query) => {
     const ep = await ProductiveStage.findById(productiveStageId);
     if (!ep) throw new Error('404|ProductiveStage not found');
     
-    if (ep.followupInstructor?.toString() !== reqUser.id &&
-        ep.technicalInstructor?.toString() !== reqUser.id &&
-        ep.projectInstructor?.toString() !== reqUser.id) {
+    const isAssigned = [
+        ep.followupInstructor?.toString(),
+        ep.technicalInstructor?.toString(),
+        ep.projectInstructor?.toString()
+    ].includes(reqUser.id.toString());
+
+    if (!isAssigned) {
       throw new Error('403|Forbidden: You are not assigned to this ProductiveStage');
     }
     filter.productiveStage = productiveStageId;
@@ -122,14 +122,18 @@ export const getDocumentById = async (reqUser, id) => {
   if (!document) throw new Error('404|Document not found');
 
   if (reqUser.role === 'APPRENTICE') {
-    if (document.apprentice.toString() !== reqUser.id) {
+    if (document.apprentice.toString() !== reqUser.id.toString()) {
       throw new Error('403|Forbidden: Document belongs to another apprentice');
     }
   } else if (reqUser.role === 'INSTRUCTOR') {
     const ep = document.productiveStage;
-    if (ep.followupInstructor?.toString() !== reqUser.id &&
-        ep.technicalInstructor?.toString() !== reqUser.id &&
-        ep.projectInstructor?.toString() !== reqUser.id) {
+    const isAssigned = [
+        ep.followupInstructor?.toString(),
+        ep.technicalInstructor?.toString(),
+        ep.projectInstructor?.toString()
+    ].includes(reqUser.id.toString());
+
+    if (!isAssigned) {
       throw new Error('403|Forbidden: You are not assigned to this ProductiveStage');
     }
   }
@@ -167,9 +171,9 @@ export const approveDocument = async (reqUser, id) => {
     const ep = await ProductiveStage.findById(document.productiveStage._id);
     if (ep && ep.followupInstructor) {
       const hoursConfig = await getConfig('HOURS_PER_CERTIFICATION');
-      const amount = hoursConfig ? hoursConfig.value : 2;
+      const amount = hoursConfig ? Number(hoursConfig) : 2;
       const now = new Date();
-      await mockAddHours({
+      await hourService.addHours({
         instructorId: ep.followupInstructor,
         month: now.getMonth() + 1,
         year: now.getFullYear(),
@@ -241,7 +245,7 @@ export const resubmitDocument = async (reqUser, id, file) => {
   const document = await Document.findOne({ _id: id, isActive: true });
   if (!document) throw new Error('404|Document not found');
 
-  if (document.apprentice.toString() !== reqUser.id) {
+  if (document.apprentice.toString() !== reqUser.id.toString()) {
     throw new Error('403|Forbidden: You can only resubmit your own documents');
   }
   if (document.status !== 'REJECTED') {
@@ -282,9 +286,13 @@ export const requestDeletion = async (reqUser, id, reason) => {
   if (!document) throw new Error('404|Document not found');
 
   const ep = document.productiveStage;
-  if (ep.followupInstructor?.toString() !== reqUser.id &&
-      ep.technicalInstructor?.toString() !== reqUser.id &&
-      ep.projectInstructor?.toString() !== reqUser.id) {
+  const isAssigned = [
+    ep.followupInstructor?.toString(),
+    ep.technicalInstructor?.toString(),
+    ep.projectInstructor?.toString()
+  ].includes(reqUser.id.toString());
+
+  if (!isAssigned) {
     throw new Error('403|Forbidden: You are not assigned to this ProductiveStage');
   }
 
@@ -341,11 +349,15 @@ export const getEPDocumentStatus = async (reqUser, productiveStageId) => {
   if (!ep) throw new Error('404|ProductiveStage not found');
 
   if (reqUser.role === 'APPRENTICE') {
-    if (ep.apprentice.toString() !== reqUser.id) throw new Error('403|Forbidden: Not assigned');
+    if (ep.apprentice.toString() !== reqUser.id.toString()) throw new Error('403|Forbidden: Not assigned');
   } else if (reqUser.role === 'INSTRUCTOR') {
-    if (ep.followupInstructor?.toString() !== reqUser.id &&
-        ep.technicalInstructor?.toString() !== reqUser.id &&
-        ep.projectInstructor?.toString() !== reqUser.id) {
+    const isAssigned = [
+        ep.followupInstructor?.toString(),
+        ep.technicalInstructor?.toString(),
+        ep.projectInstructor?.toString()
+    ].includes(reqUser.id.toString());
+
+    if (!isAssigned) {
       throw new Error('403|Forbidden: You are not assigned to this ProductiveStage');
     }
   }

@@ -72,7 +72,6 @@ const CompanySchema = new Schema({
 }, { timestamps: true });
 
 // Índices para optimización
-CompanySchema.index({ taxId: 1 });           // unique (definido en el campo pero reforzado aquí)
 CompanySchema.index({ name: 'text' });       // full-text search para búsquedas rápidas
 CompanySchema.index({ isActive: 1 });
 

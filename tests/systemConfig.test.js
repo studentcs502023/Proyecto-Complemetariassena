@@ -10,8 +10,9 @@ describe("Módulo SystemConfig", () => {
     let adminToken, instructorToken;
 
     beforeAll(async () => {
+        const MONGO_URI = env.MONGODB_URI || 'mongodb://127.0.0.1:27017/repfora_test';
         if (mongoose.connection.readyState === 0) {
-            await mongoose.connect(env.MONGODB_URI);
+            await mongoose.connect(MONGO_URI);
         }
 
         // Limpiar para pruebas

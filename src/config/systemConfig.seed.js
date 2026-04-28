@@ -33,7 +33,7 @@ export const seedSystemConfigs = async () => {
             await SystemConfig.findOneAndUpdate(
                 { key: item.key },
                 { $setOnInsert: item },
-                { upsert: true, new: false }
+                { upsert: true, returnDocument: 'before' }
             );
         }
         console.log("✅ Configuraciones del sistema inicializadas correctamente.");

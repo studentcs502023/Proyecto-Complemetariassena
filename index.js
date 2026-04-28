@@ -11,6 +11,12 @@ import systemConfigRoutes from './src/routes/systemConfig.routes.js';
 import companyRoutes from './src/routes/companies.routes.js';
 import noveltyRoutes from './src/routes/novelties.routes.js';
 import documentRoutes from './src/routes/documents.routes.js';
+import bitacoraRoutes from './src/routes/bitacoras.routes.js';
+import trackingRoutes from './src/routes/trackings.routes.js';
+import hourRoutes from './src/routes/hours.routes.js';
+import notificationRoutes from './src/routes/notifications.routes.js';
+import reportRoutes from './src/routes/reports.routes.js';
+import { initJobs } from './src/jobs/alerts.job.js';
 
 const app = express();
 
@@ -19,6 +25,8 @@ if (process.env.NODE_ENV !== 'test') {
     conectarMongo().then(() => {
         // Ejecutar semilla de configuraciones al iniciar la DB
         seedSystemConfigs();
+        // Iniciar cron jobs
+        initJobs();
     });
 }
 
@@ -35,6 +43,11 @@ app.use('/api/system-config', systemConfigRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/novelties', noveltyRoutes);
 app.use('/api/documents', documentRoutes);
+app.use('/api/bitacoras', bitacoraRoutes);
+app.use('/api/trackings', trackingRoutes);
+app.use('/api/hours', hourRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/reports', reportRoutes);
 
 // Puerto y Listen (Solo si no estamos en test)
 if (process.env.NODE_ENV !== 'test') {

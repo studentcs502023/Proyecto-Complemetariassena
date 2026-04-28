@@ -4,11 +4,12 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
     "start": "node index.js",
     "seed": "node src/config/seed.js",
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
-    "test:watch": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --watchAll"
+    "test:watch": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --watchAll",
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js",
+    "dev": "cross-env NODE_ENV=development node server.js"
   },
   "dependencies": {
     "axios": "^1.13.6",
@@ -22,7 +23,10 @@
     "mongoose": "^9.3.3",
     "morgan": "^1.10.1",
     "multer": "^2.1.1",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^8.0.6",
     "nodemon": "^3.1.14",
+    "pdfkit": "^0.18.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
